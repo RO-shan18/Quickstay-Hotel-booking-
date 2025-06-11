@@ -17,7 +17,7 @@ app.use(clerkMiddleware())
 // api to listen clerk
 app.use('/api/clerk', clerkwebhooks)
 
-app.use('/', (req, res)=> res.send("API is working"));
+app.get('/', (req, res)=> res.send("API is working"));
 
 //connect Database
 connectDB().then(()=>{

@@ -14,10 +14,10 @@ app.use(express.json());
 app.use(cors());
 app.use(clerkMiddleware())
 
-app.use('/', (req, res)=> res.send("API is working"));
-
 // api to listen clerk
 app.use('/api/clerk', clerkwebhooks)
+
+app.use('/', (req, res)=> res.send("API is working"));
 
 //connect Database
 connectDB().then(()=>{

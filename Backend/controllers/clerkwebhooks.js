@@ -9,7 +9,7 @@ const clerkwebhooks = async (req, res) => {
     // Getting headers
     const headers = {
       "svix-id": req.headers["svix-id"],
-      "svix-timestamps": req.headers["svix-timestamps"],
+      "svix-timestamp": req.headers["svix-timestamp"],
       "svix-signature": req.headers["svix-signature"],
     };
 
@@ -20,9 +20,9 @@ const clerkwebhooks = async (req, res) => {
     const { data, type } = req.body;
 
     const userData = {
-      _id: data._id,
+      _id: data.id,
       email: data.email_addresses[0].email_address,
-      name: data.firstname + " " + data.lastname,
+      username: data.first_name + " " + data.last_name,
       image: data.image_url,
     };
 
@@ -34,12 +34,12 @@ const clerkwebhooks = async (req, res) => {
       }
 
       case "user.updated": {
-        await usermodel.findByIdAndUpdate(data._id, userData);
+        await usermodel.findByIdAndUpdate(data.id, userData);
         break;
       }
 
       case "user.created": {
-        await usermodel.findByIdAndDelete(data._id);
+        await usermodel.findByIdAndDelete(data.id);
         break;
       }
 

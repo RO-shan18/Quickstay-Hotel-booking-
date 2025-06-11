@@ -53,4 +53,4 @@ const clerkwebhooks = async (req, res) => {
   }
 };
 
-export default clerkwebhooks
+export {clerkwebhooks}

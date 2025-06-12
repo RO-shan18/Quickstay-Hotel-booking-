@@ -23,6 +23,7 @@ app.get('/', (req, res)=> res.send("API is working"));
 connectDB().then(()=>{
      console.log("Database connected successfully");
 
+     app.listen(PORT, ()=> console.log("App Listen to the port: ", PORT))
 }).catch(()=>{
     console.log("Database not connected")
 })

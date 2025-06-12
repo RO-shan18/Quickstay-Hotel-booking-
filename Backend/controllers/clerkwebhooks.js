@@ -38,7 +38,7 @@ const clerkwebhooks = async (req, res) => {
         break;
       }
 
-      case "user.created": {
+      case "user.deleted": {
         await usermodel.findByIdAndDelete(data.id);
         break;
       }

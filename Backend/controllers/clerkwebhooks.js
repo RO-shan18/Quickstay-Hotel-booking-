@@ -6,6 +6,8 @@ const clerkwebhooks = async (req, res) => {
     // create svix instance
     const whook = new Webhook(process.env.WEBHOOKS_SIGNING_SECRET); 
 
+    console.log("Saving inside the database")
+
     // Getting headers
     const headers = {
       "svix-id": req.headers["svix-id"],
@@ -13,11 +15,18 @@ const clerkwebhooks = async (req, res) => {
       "svix-signature": req.headers["svix-signature"],
     };
 
+    console.log("headers")
+
     //verifying headers
     await whook.verify(JSON.stringify(req.body), headers);
+    
+    console.log(req.body)
 
     //Getting data from req boy
     const { data, type } = req.body;
+
+    console.log("data: ", data)
+    console.log("type: ", type);
 
     const userData = {
       _id: data.id,
@@ -25,6 +34,8 @@ const clerkwebhooks = async (req, res) => {
       username: data.first_name + " " + data.last_name,
       image: data.image_url,
     };
+
+    console.log(userData)
 
     //switch case for different events
     switch (type) {

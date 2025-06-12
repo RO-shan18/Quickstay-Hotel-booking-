@@ -3,7 +3,7 @@ import cors from 'cors';
 import 'dotenv/config';
 import connectDB from './config/mongoose.js';
 import { clerkMiddleware } from '@clerk/express'
-import {clerkwebhooks} from './controllers/clerkwebhooks.js';
+import clerkwebhooks from './controllers/clerkwebhooks.js';
 
 // App config
 const app = express();

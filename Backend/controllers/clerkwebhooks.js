@@ -23,7 +23,7 @@ const clerkwebhooks = async (req, res) => {
     console.log(req.body)
 
     //Getting data from req boy
-    const { data, type } = req.body;
+    const {data, type} = req.body;
 
     console.log("data: ", data)
     console.log("type: ", type);
@@ -33,6 +33,7 @@ const clerkwebhooks = async (req, res) => {
       email: data.email_addresses[0].email_address,
       username: data.first_name + " " + data.last_name,
       image: data.image_url,
+      recentSearchCities: []
     };
 
     console.log(userData)

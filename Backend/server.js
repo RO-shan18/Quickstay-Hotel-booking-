@@ -15,7 +15,11 @@ app.use(cors());
 app.use(clerkMiddleware())
 
 // api to listen clerk
-app.use('/api/clerk', clerkwebhooks)
+app.post('/api/clerk', (req, res, next) => {
+  console.log("🔥 Webhook route triggered");
+  next();
+}, clerkwebhooks);
+
 
 app.get('/', (req, res)=> res.send("API is working"));
 

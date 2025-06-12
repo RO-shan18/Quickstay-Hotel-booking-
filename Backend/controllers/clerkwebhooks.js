@@ -4,7 +4,7 @@ import { Webhook } from "svix";
 const clerkwebhooks = async (req, res) => {
   try {
     // create svix instance
-    const whook = new Webhook(process.env.WEBHOOKS_SIGNING_SECRET);
+    const whook = new Webhook(process.env.WEBHOOKS_SIGNING_SECRET); 
 
     // Getting headers
     const headers = {
@@ -46,9 +46,11 @@ const clerkwebhooks = async (req, res) => {
       default:
         break;
     }
+
     res.json({ success: true, message: "Webhooks created" });
 
   } catch (error) {
+    console.log(error.message)
     res.json({ success: false, message: error.message });
   }
 };

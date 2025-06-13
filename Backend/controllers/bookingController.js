@@ -111,7 +111,7 @@ const getownerhoteldetails = async(req, res)=>{
         //total Revenue generate by that hotel
         const totalRevenue = bookings.reduce((acc, booking)=> acc + booking.totalPrice, 0);
 
-        res.json({success:true, totalbookings, totalRevenue, bookings});
+        res.json({success:true, Dashboard: {totalbookings, totalRevenue, bookings}});
 
     }catch(error){
         res.json({success:false, message:error.message})

@@ -111,7 +111,7 @@ const HotelRooms = () => {
                     <span className=" lg:block hidden">CLEAR</span>
                 </div>
             </div>
-            <div className={`${!showfilters && "hidden"} transition-all duration-500`}>
+            <div className={`${showfilters && "hidden"} transition-all duration-500`}>
             {/* roomtype filter */}
             <div className="flex flex-col text-gray-400 px-4">
               <h1 className=" text-black py-2 text-lg">Popular filters</h1>

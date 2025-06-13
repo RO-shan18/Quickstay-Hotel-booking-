@@ -5,6 +5,8 @@ import connectDB from './config/mongoose.js';
 import { clerkMiddleware } from '@clerk/express'
 import clerkwebhooks from './controllers/clerkwebhooks.js';
 import userRouter from './routes/userroute.js';
+import hotelRouter from './routes/hotelroute.js';
+import roomRouter from './routes/roomRoute.js';
 
 // App config
 const app = express();
@@ -23,6 +25,8 @@ app.post('/api/clerk', (req, res, next) => {
 
 //user Routes
 app.use('/api/user', userRouter);
+app.use('/api/hotel', hotelRouter);
+app.use('/api/rooms', roomRouter);
 
 
 app.get('/', (req, res)=> res.send("API is working"));

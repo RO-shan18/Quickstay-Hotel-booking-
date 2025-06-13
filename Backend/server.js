@@ -7,6 +7,7 @@ import clerkwebhooks from './controllers/clerkwebhooks.js';
 import userRouter from './routes/userroute.js';
 import hotelRouter from './routes/hotelroute.js';
 import roomRouter from './routes/roomRoute.js';
+import bookingRouter from './routes/bookingroute.js';
 
 // App config
 const app = express();
@@ -27,6 +28,7 @@ app.post('/api/clerk', (req, res, next) => {
 app.use('/api/user', userRouter);
 app.use('/api/hotel', hotelRouter);
 app.use('/api/rooms', roomRouter);
+app.use('/api/booking', bookingRouter);
 
 
 app.get('/', (req, res)=> res.send("API is working"));

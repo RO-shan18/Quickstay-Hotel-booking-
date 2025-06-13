@@ -4,6 +4,7 @@ import 'dotenv/config';
 import connectDB from './config/mongoose.js';
 import { clerkMiddleware } from '@clerk/express'
 import clerkwebhooks from './controllers/clerkwebhooks.js';
+import userRouter from './routes/userroute.js';
 
 // App config
 const app = express();
@@ -19,6 +20,9 @@ app.post('/api/clerk', (req, res, next) => {
   console.log("🔥 Webhook route triggered");
   next();
 }, clerkwebhooks);
+
+//user Routes
+app.use('/api/user', userRouter);
 
 
 app.get('/', (req, res)=> res.send("API is working"));

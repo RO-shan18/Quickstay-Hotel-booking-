@@ -36,7 +36,7 @@ const clerkwebhooks = async (req, res) => {
       recentSearchCities: []
     };
 
-    console.log(userData)
+    console.log(type)
 
     //switch case for different events
     switch (type) {

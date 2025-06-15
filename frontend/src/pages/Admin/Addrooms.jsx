@@ -1,8 +1,13 @@
 import React, { useState } from 'react'
 import Title from '../../components/Title'
 import { assets } from '../../assets/assets';
+import { useAppContext } from '../../../context/AppContext';
 
 const Addrooms = () => {
+
+  const {getToken, axios, toast} = useAppContext();
+
+  const [loading , setloading] = useState(false);
 
   const [images, setimages] = useState({
     1:null,
@@ -14,7 +19,7 @@ const Addrooms = () => {
   const [inputs, setinputs] = useState({
     roomType : "",
     pricePerNight : 0,
-    aminities : {
+    amenities : {
       "Free WiFi" : false,
       "Room Service" : false,
       "Pool Access" : false,
@@ -23,13 +28,72 @@ const Addrooms = () => {
     }
   })
 
+  //adding rooms for particular hotel
+  const submithandler = async(e)=>{
+    e.preventDefault();
+
+    if(!inputs.roomType || !inputs.pricePerNight || !inputs.amenities || !Object.values(images).some(image => image)){
+       toast.error("Please fill in all the details")
+    }
+
+    setloading(true);
+
+    try{
+
+        //Store inside form
+        let formdata = new FormData();
+
+        formdata.append("roomType", inputs.roomType);
+        formdata.append("pricePerNight", inputs.pricePerNight);
+
+        //get selected aminity
+        const amenities = Object.keys(inputs.amenities).filter(key => inputs.amenities[key]);
+
+        formdata.append("amenities", JSON.stringify(amenities));
+
+        //get images which is available
+        Object.keys(images).filter(key => images[key] && formdata.append("image", images[key]));
+
+        const {data} = await axios.post('/api/rooms/add-room', formdata, {headers : {
+          Authorization : `Bearer ${await getToken()}`
+        }});
+
+        console.log(data)
+
+        if(data.success){
+           toast.success(data.message);
+           
+           //empty the fields
+           setinputs({
+             roomType : "",
+             pricePerNight : 0,
+             amenities : {
+                "Free WiFi" : false,
+                "Room Service" : false,
+                "Pool Access" : false,
+                "Free Breakfast" : false,
+                "Mountain View" : false,
+              }
+           })
+           
+           setimages({1:null, 2:null, 3:null, 4:null})
+        }else{
+          
+          toast.error(data.message);
+        }
+
+    }catch(error){
+       toast.error(error.message);
+    }
+
+    setloading(false)
+  }
 
   return (
     <div className='mx-10 my-5'>
        <Title font="Outlook" title="Add Room" desc="Fill in the details carefully and accurate room details, pricing, and amenities, to enhance the user booking experience." />
 
-       
-       <form className='flex flex-col gap-8 my-5'>
+       <form onSubmit={submithandler} className='flex flex-col gap-8 my-5'>
          {/* images */}
          <div className='flex flex-col gap-2'>
           <p className='text-xl text-gray-700'>Images</p>
@@ -62,20 +126,20 @@ const Addrooms = () => {
          {/* price per night */}
          <div className='flex flex-col gap-2'>
           <p className='text-xl text-gray-700'> Price perNight</p>
-          <input className='px-4 py-2 border-2 border-gray-300 text-gray-700' type="Number" value={inputs.pricePerNight} onChange={(e)=> setimages(e.target.value)}/>
+          <input className='px-4 py-2 border-2 border-gray-300 text-gray-700' type="Number" value={inputs.pricePerNight} onChange={(e)=> setinputs({...inputs,  pricePerNight : e.target.value})}/>
          </div>
         </div>
 
          {/* aminites */}
          <div className='flex flex-col gap-2'>
-          <p className='text-xl text-gray-700'>Aminities</p>
+          <p className='text-xl text-gray-700'>Amenities</p>
 
           <div className='flex flex-col gap-2'>
          {
-            Object.keys(inputs.aminities).map((aminity, index)=>{
+            Object.keys(inputs.amenities).map((aminity, index)=>{
               return(
-                 <label htmlFor='index' className='flex gap-2 '>
-                   <input type="checkbox" checked={inputs.aminities[aminity]} value={inputs.aminities[aminity] } onChange={(e)=>setinputs( {...inputs, aminities:{...inputs.aminities, [aminity] : !inputs.aminities[aminity]}})}/>
+                 <label key={index} htmlFor='index' className='flex gap-2 '>
+                   <input type="checkbox" checked={inputs.amenities[aminity]} value={inputs.amenities[aminity] } onChange={(e)=>setinputs( {...inputs, amenities:{...inputs.amenities, [aminity] : !inputs.amenities[aminity]}})}/>
                    <p className='text-gray-700 '>{aminity}</p>
                  </label>
               )
@@ -85,7 +149,7 @@ const Addrooms = () => {
          </div>
 
          {/* button */}
-         <button className='bg-blue-500 px-5 py-2 w-1/4 text-white text-xl'>Add room</button>
+         <button className='bg-blue-500 px-5 py-2 w-1/4 text-white text-xl'>{loading ? " Adding...." : "Add room"}</button>
        </form>
     </div>
   )

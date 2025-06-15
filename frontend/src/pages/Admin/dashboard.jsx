@@ -1,13 +1,40 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Title from '../../components/Title'
-import { assets, dashboardDummyData } from '../../assets/assets'
+import { assets } from '../../assets/assets'
+import { useAppContext } from '../../../context/AppContext'
 
 const Dashboard = () => {
 
-   const [dashboarddata, setdashboarddata] = useState(dashboardDummyData)
+   const [dashboarddata, setdashboarddata] = useState()
+
+   const {axios, toast, getToken, user} = useAppContext();
+
+   const getdashboarddata = async()=>{
+    try{
+
+      const {data} = await axios.get('/api/booking/owner-hotel-detail', {headers : {
+          Authorization : `Bearer ${await getToken()}`
+        }})
+
+      if(data.success){
+         setdashboarddata(data.Dashboard);
+      }else{
+        toast.error("Can't getting details")
+      }
+
+    }catch(error){
+      toast.error(error.message)
+    }
+   }
+
+   useEffect(()=>{
+    if(user){
+      getdashboarddata();
+    }
+   },[user])
 
   return (
-    <div className='m-7 flex flex-col gap-12'>
+    <div className='m-7 flex flex-col gap-12'> 
       <div >
       <Title font="Outlook" title="Dashboard" desc="Monitor your room listings, track bookings and analyze revenue—all in one place. Stay updated with real-time insights to ensure smooth operations." />
       </div>
@@ -19,7 +46,7 @@ const Dashboard = () => {
 
             <div className='flex flex-col '>
             <p className='text-blue-600 font-semibol'>Total Bookings</p>
-            <p className='text-gray-800 text-sm'>{dashboarddata.totalBookings}</p>
+            <p className='text-gray-800 text-sm'>{dashboarddata?.totalBookings}</p>
            </div>
         </div>
 
@@ -29,7 +56,7 @@ const Dashboard = () => {
 
           <div className='flex flex-col '> 
           <p className='text-blue-600 font-semibol'>Total Revenue</p>
-          <p className='text-gray-800 text-sm'>{dashboarddata.totalRevenue}</p>
+          <p className='text-gray-800 text-sm'>{dashboarddata?.totalRevenue}</p>
           </div>
         </div>
       </div>
@@ -48,7 +75,7 @@ const Dashboard = () => {
           </thead>
           <tbody>
             {
-              dashboarddata.bookings.map((data)=>{
+              dashboarddata?.bookings?.map((data)=>{
                 return(
                     <tr key={data._id}>               
                       <td className="px-6 py-3 border border-gray-300 text-gray-500">{data.user.username}</td> 

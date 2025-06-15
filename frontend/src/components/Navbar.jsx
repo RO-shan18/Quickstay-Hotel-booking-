@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { assets } from "../assets/assets";
 import { useClerk, UserButton, useUser } from '@clerk/clerk-react';
+import { useAppContext } from "../../context/AppContext";
 
 const Navbar = () => {
   const navLinks = [
@@ -19,11 +20,10 @@ const Navbar = () => {
     )
   }
 
-  const navigate = useNavigate();
-  const location = useLocation();
+  const {user, navigate, isOwner, setshowreghotel} = useAppContext()
 
+  const location = useLocation();
   const {openSignIn} = useClerk();
-  const {user} = useUser();
 
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -77,13 +77,15 @@ const Navbar = () => {
             />
           </Link>
         ))}
-        <button
+        {user && (
+          <button
           className={`border px-4 py-1 text-sm font-light rounded-full cursor-pointer ${
             isScrolled ? "text-black" : "text-white"
-          } transition-all`}  onClick={()=> navigate('/owner')}
+          } transition-all`}  onClick={()=> isOwner ? navigate('/owner') : setshowreghotel(true)}
         >
-          Dashboard
+          {isOwner ? "Dashboard" : "List your hotel"}
         </button>
+        )}
       </div>
 
       {/* Desktop Right */}
@@ -153,9 +155,11 @@ const Navbar = () => {
           </Link>
         ))}
 
-       { <button onClick={()=> navigate('/owner')} className="border px-4 py-1 text-sm font-light rounded-full cursor-pointer transition-all">
-          Dashboard
-        </button>}
+       {user && (
+          <button onClick={()=> isOwner ? navigate('/owner') : setshowreghotel(true)} className="border px-4 py-1 text-sm font-light rounded-full cursor-pointer transition-all">
+           {isOwner ? "Dashboard" : "List your hotel"}
+          </button>
+       ) }
 
         {!user && <button onClick={openSignIn} className="bg-black text-white px-8 py-2.5 rounded-full transition-all duration-500">
           Login

@@ -2,13 +2,13 @@ import usermodel from "../models/usermodel.js";
 
 const Userauth = async (req, res, next) =>{
     try{
-        const {UserId} = req.auth;
+        const {userId} = req.auth();
 
-        if(!UserId){
-            return res.json({succes:true, message:"Not Authorized"});
+        if(!userId){
+            return res.json({succes:false, message:"Not Authorized"});
         }
 
-        const userdata = await usermodel.findById(UserId);
+        const userdata = await usermodel.findById(userId);
         req.user = userdata;
 
         next();

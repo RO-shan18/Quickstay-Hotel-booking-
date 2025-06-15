@@ -19,7 +19,7 @@ const registerhotel = async (req, res)=>{
 
         await usermodel.findByIdAndUpdate(owner, {role : "hotelowner"});
 
-        res.json({success:true, message: "registered successfully"});
+        res.json({success:true, message: "Hotel Registered Successfully"});
 
     }catch(error){
         res.json({success:false, message:error.message});

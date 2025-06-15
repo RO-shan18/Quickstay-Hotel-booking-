@@ -182,7 +182,7 @@ export const roomsDummyData = [
         "createdAt": "2025-04-10T06:24:06.285Z",
         "updatedAt": "2025-04-10T06:24:06.285Z",
         "__v": 0
-    },
+    }, 
     {
         "_id": "67f763d8197ac559e4089b7a",
         "hotel": hotelDummyData,

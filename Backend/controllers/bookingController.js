@@ -1,4 +1,5 @@
 import bookingmodel from "../models/bookingmodel.js"
+import hotelmodel from "../models/hotelmodel.js";
 import roommodel from "../models/roommodel.js"
 
 const CheckAvailability = async({room, checkInDate, checkOutDate})=>{
@@ -45,7 +46,7 @@ const createbooking = async(req, res)=>{
         if(!bookings){
             return res.json({success:false, message:"Room is not available"});
         }
-
+ 
         //get totalprice from the room
         const roomdata = await roommodel.findById(room).populate("hotel");
 
@@ -96,22 +97,22 @@ const getuserbookingdetails = async(req, res)=>{
 const getownerhoteldetails = async(req, res)=>{
     try{
         //check if the user a owner or not 
-        const hotel = await hotel.find({owner : req.auth.UserId});
+        const Hotel = await hotelmodel.find({owner : req.auth().UserId});
 
-        if(!hotel){
+        if(!Hotel){
             return res.json({success:false, message: "No hotel found"});
         }
 
         //check if the hotel has any bookings
-        const bookings = await bookingmodel.find({hotel: hotel._id}).populate("User hotel room").sort({createdAt:-1})
+        const bookings = await bookingmodel.find({hotel: Hotel._id}).populate("User hotel room").sort({createdAt:-1})
 
         //total bookings for that hotel
-        const totalbookings = bookings.length;
+        const totalBookings = bookings.length;
 
         //total Revenue generate by that hotel
         const totalRevenue = bookings.reduce((acc, booking)=> acc + booking.totalPrice, 0);
 
-        res.json({success:true, Dashboard: {totalbookings, totalRevenue, bookings}});
+        res.json({success:true, Dashboard: {totalBookings, totalRevenue, bookings}});
 
     }catch(error){
         res.json({success:false, message:error.message})

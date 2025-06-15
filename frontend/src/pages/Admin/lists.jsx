@@ -1,9 +1,52 @@
 import React, { useState } from "react";
 import Title from "../../components/Title";
-import { roomsDummyData } from "../../assets/assets";
+import { useAppContext } from "../../../context/AppContext";
+import { useEffect } from "react";
 
 const Lists = () => {
-  const [roomsdata, setroomsdata] = useState(roomsDummyData);
+  const [roomsdata, setroomsdata] = useState([]);
+  const {getToken, axios, toast, user} = useAppContext();
+
+  const listrooms = async()=>{
+    try{
+      const {data} = await axios.get('/api/rooms/get-owner-room', {headers : {
+          Authorization : `Bearer ${await getToken()}`
+        }})
+
+      if(data.success){
+         setroomsdata(data.message)
+         
+      }else{
+        toast.error(data.message);
+      }
+    }catch(error){
+       toast.error(error.message);
+    }
+  }
+
+  useEffect(()=>{
+    if(user)
+    listrooms();
+  },[user])
+
+  //availability check
+  const checkavailability = async(roomId)=>{
+     try{
+        
+       const {data} = await axios.post('/api/rooms/toogle-availability', {roomId}, {headers : {
+          Authorization : `Bearer ${await getToken()}`
+        }}) 
+
+        if(data.success){
+          toast.success(data.message);
+          listrooms();
+        }else{
+          toast.error(data.message);
+        }
+     }catch(error){
+       toast.error(error.message)
+     }
+  }
 
   return (
     <div className="m-10 flex flex-col gap-9">
@@ -47,9 +90,10 @@ const Lists = () => {
                   <td className="px-6 py-3 border border-gray-300 text-gray-500">
                     {data.pricePerNight}
                   </td>
-                  <td className="py-3 px-4 border-t border-gray-300 text-sm text-red-500 text-center">
-                    <label className="relative inline-flex items-center cursor-pointer text-gray-900 gap-3">
+                  <td  className="py-3 px-4 border-t border-gray-300 text-sm text-red-500 text-center">
+                    <label  className="relative inline-flex items-center cursor-pointer text-gray-900 gap-3">
                       <input
+                        onChange={() => checkavailability(data._id)}
                         type="checkbox"
                         className="sr-only peer"
                         checked={data.isAvailable}

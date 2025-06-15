@@ -1,10 +1,11 @@
 import hotelmodel from "../models/hotelmodel.js";
 import roommodel from "../models/roommodel.js";
+import {v2 as cloudinary} from 'cloudinary';
 
 const AddHotelroom = async(req, res)=>{
     try{
         
-        const {roomType, aminities, pricePerNight} = req.body;
+        const {roomType, amenities, pricePerNight} = req.body;
 
         const hotel = await hotelmodel.findOne({owner : req.user._id});
 
@@ -15,7 +16,7 @@ const AddHotelroom = async(req, res)=>{
         //upload images to cloudinary
         const uploadimages = req.files;
 
-        const images = imagefiles.map(async(image)=>{
+        const images = uploadimages.map(async(image)=>{
             const response = await cloudinary.uploader.upload(image.path);
             return response.secure_url;
         })
@@ -24,7 +25,7 @@ const AddHotelroom = async(req, res)=>{
 
         const roomsdata = new roommodel({
             roomType : roomType,
-            aminities : JSON.parse(aminities),
+            amenities : JSON.parse(amenities),
             pricePerNight : +pricePerNight,
             image,
             hotel : hotel._id,
@@ -63,21 +64,22 @@ const getallrooms = async(req, res)=>{
 const getownerrooms = async(req, res)=>{
     try{
 
-        const hoteldata = await hotelmodel({owner : req.auth.UserId});
-
-        const rooms = await roommodel.findById({hotel : hoteldata._id.toString()}).populate('hotel');
+        const hoteldata = await hotelmodel.findOne({owner : req.auth().userId});
+      
+        const rooms = await roommodel.find({hotel : hoteldata._id.toString()}).populate('hotel');
 
         res.json({success:true, message:rooms});
 
     }catch(error){
          res.json({success:false, message:error.message});
-    }
+    } 
 }
 
 //toggle availability
 const toggleroomsavailability = async(req, res)=>{
     try{
        const {roomId} = req.body;
+
        const rooms = await roommodel.findById(roomId);
        rooms.isAvailable = !rooms.isAvailable;
        await rooms.save();

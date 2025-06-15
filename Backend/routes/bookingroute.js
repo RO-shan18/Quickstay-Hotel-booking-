@@ -8,5 +8,5 @@ bookingRouter.post('/check-availability', CheckAvailabilityAPI);
 bookingRouter.post('/create-booking', Userauth, createbooking);
 bookingRouter.get('/user-booking-detail', Userauth, getuserbookingdetails);
 bookingRouter.get('/owner-hotel-detail', Userauth, getownerhoteldetails);
-
+ 
 export default bookingRouter

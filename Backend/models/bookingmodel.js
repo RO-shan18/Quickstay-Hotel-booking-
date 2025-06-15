@@ -14,7 +14,7 @@ const bookingSchema = new mongoose.Schema({
         ref : "hotel"
     },
 
-    user : {
+    user : { 
         type : String,
         required : true,
         ref : "User"

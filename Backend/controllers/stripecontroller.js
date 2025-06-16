@@ -7,7 +7,7 @@ const stripewebhook = async(req, res)=>{
 
         const signature = request.headers['stripe-signature']
 
-        let event
+        let event;
 
         try{
             event = stripe.webhooks.constructEvent(

@@ -18,6 +18,8 @@ const Mybookings = () => {
         },
       });
 
+      console.log(data)
+
       if (data.success) {
         setbookings(data.message);
       } else {

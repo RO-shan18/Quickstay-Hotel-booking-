@@ -1,8 +1,41 @@
 import React from 'react'
 import Title from '../components/Title'
-import { assets, userBookingsDummyData } from '../assets/assets'
+import { assets } from '../assets/assets'
+import { useState } from 'react'
+import { useAppContext } from '../../context/AppContext'
+import { useEffect } from 'react'
 
 const Mybookings = () => {
+
+    const {axios, toast, getToken, user} = useAppContext();
+
+    const [bookings, setbookings] = useState([]);
+
+    const getuserbookings = async()=>{
+        try{
+
+            const {data} = await axios.get('/api/booking/user-booking-detail', {
+            headers: {
+              Authorization: `Bearer ${await getToken()}`,
+            },
+          })
+
+            if(data.success){
+                setbookings(data.message);
+            }else{
+                toast.error("No bookings available");
+            }
+
+        }catch(error){
+            toast.error(error.message)
+        }
+    }
+
+    useEffect(()=>{
+        if(user){
+            getuserbookings();
+        }
+    },[user])
   return (
     <div className='w-5/6 mx-auto my-30 flex flex-col gap-6'>
         <div>
@@ -18,12 +51,12 @@ const Mybookings = () => {
 
         <div className='flex flex-col gap-5'>
             {
-                userBookingsDummyData.map((data)=>{
+                bookings.map((data)=>{
                     return <div className='grid grid-cols-[3fr_2fr_1fr] gap-5 ' key={data._id}> 
                     {/* first column */}
                     <div className='flex gap-4'>
                         {/* image */}
-                       <img className='w-2/4 rounded-lg' src={data.room.images[0]} />
+                       <img className='w-2/4 rounded-lg' src={data.room.image[0]} />
 
                         {/* hotel name */}
                       <div className='flex flex-col gap-3 justify-center'>
@@ -53,11 +86,11 @@ const Mybookings = () => {
                     <div className='flex gap-7 items-center'>
                         <div className='flex flex-col items-start'>
                             <p className='text-gray-800 '>Check-In:</p>
-                            <p className='text-gray-500 text-md'>{new Date(Date.now()).toLocaleString()}</p>
+                            <p className='text-gray-500 text-md'>{new Date(data.checkInDate).toLocaleDateString()}</p>
                         </div>
                         <div className='flex flex-col items-start'>
                             <p className='flex flex-col items-start'>Check-Out:</p>
-                            <p className='text-gray-500 text-md'>{new Date(Date.now()).toLocaleString()}</p>
+                            <p className='text-gray-500 text-md'>{new Date(data.checkOutDate).toLocaleDateString()}</p>
                         </div>
                     </div>
 

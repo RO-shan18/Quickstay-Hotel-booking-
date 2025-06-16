@@ -1,9 +1,12 @@
 import React from "react";
 import { assets } from "../assets/assets";
+import { useAppContext } from "../../context/AppContext";
 
 const Hotel_rooms = ({ room, index }) => {
+
+    const {rooms, navigate} = useAppContext();
   return (
-    <div className="flex flex-col gap-6 rounded-xl ">
+    <div onClick={()=> navigate(`/rooms/${room._id}`)} className="flex flex-col gap-6 rounded-xl ">
       <div>
         {index % 2 === 0 && (
           <p className="absolute m-2 rounded-lg bg-white px-2 py-1">BestSeller</p>

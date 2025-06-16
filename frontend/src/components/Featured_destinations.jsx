@@ -1,14 +1,13 @@
 import React from 'react'
 import Title from './Title'
 import Hotel_rooms from './Hotel_rooms'
-import { useNavigate } from 'react-router-dom'
+
 import { useAppContext } from '../../context/AppContext'
 
 const Featured_destinations = () => {
 
-  const {rooms} = useAppContext();
+  const {rooms, navigate} = useAppContext();
 
-  const navigate = useNavigate();
   return rooms.length > 0 && (
     <div>
         <div className='my-20 text-center'>

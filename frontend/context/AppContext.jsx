@@ -49,8 +49,6 @@ export const AppContextProvider = ({children})=>{
 
            const {data} = await axios.get('/api/rooms/get-room');
 
-           console.log(data);
-
            if(data.success){
             setrooms(data.message);
            }else{

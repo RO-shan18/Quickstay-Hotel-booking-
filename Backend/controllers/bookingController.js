@@ -2,6 +2,7 @@ import transporter from "../config/nodemailer.js";
 import bookingmodel from "../models/bookingmodel.js"
 import hotelmodel from "../models/hotelmodel.js";
 import roommodel from "../models/roommodel.js"
+import Stripe from 'stripe'
 
 const CheckAvailability = async(room, checkInDate, checkOutDate)=>{
     try{
@@ -148,4 +149,46 @@ const getownerhoteldetails = async(req, res)=>{
     }
 }
 
-export {CheckAvailabilityAPI, createbooking, getuserbookingdetails, getownerhoteldetails}
+const addStripePayment = async(req, res)=>{
+    try{
+
+        const {bookingId} = req.body;
+
+        const booking = await bookingmodel.findById(bookingId);
+        const room = await roommodel.findById(booking.room).populate('hotel');
+        const totalPrice = booking.totalPrice;
+
+        const {origin}  = req.headers;
+
+        const stripeInstance = new Stripe(process.env.STRIPE_SECRET_KEY)
+
+        //create line items
+        const line_items = [{
+            price_data : {
+                currency : "usd",
+                product_data : {
+                    name : room.hotel.name
+                },
+               unit_amount :totalPrice * 100,
+            },
+            quantity : 1,
+        }]
+
+        //checkout session
+        const session = await stripeInstance.checkout.sessions.create({
+            line_items,
+            mode : 'payment',
+            success_url:`${origin}/loader/my-bookings`,
+            cancel_url: `${origin}/my-bookings`,
+            metadata : {
+                bookingId
+            }
+        })
+
+        res.json({success:true, url:session.url})
+    }catch(error){
+        res.json({success:false, message:error.message})
+    }
+}
+
+export {CheckAvailabilityAPI, createbooking, getuserbookingdetails, getownerhoteldetails, addStripePayment}

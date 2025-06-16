@@ -9,6 +9,7 @@ import hotelRouter from "./routes/hotelroute.js";
 import roomRouter from "./routes/roomRoute.js";
 import bookingRouter from "./routes/bookingroute.js";
 import connectcloudinary from "./config/cloudinary.js";
+import stripewebhook from "./controllers/stripecontroller.js";
 
 // App config
 const app = express();
@@ -35,8 +36,9 @@ app.use("/api/hotel", hotelRouter);
 app.use("/api/rooms", roomRouter);
 app.use("/api/booking", bookingRouter);
 
-app.get("/", (req, res) => res.send("API is working"));
+app.use("/api/stripe", express.raw({type : 'application/json'}), stripewebhook)
 
+app.get("/", (req, res) => res.send("API is working"));
 
 //connect Database
 connectDB()

@@ -6,6 +6,7 @@ import { useAppContext } from '../../../context/AppContext'
 
 const Layout = () => {
   const {isOwner, navigate} = useAppContext();
+  const {showsidebar} = useAppContext();
 
   useEffect(()=>{
     if(!isOwner){
@@ -17,7 +18,7 @@ const Layout = () => {
     <div>
       <Navbar/>
       <div className='flex '>
-       <Sidebar/>
+      {showsidebar &&  <Sidebar/>}
         <div>
           <Outlet/>
         </div>

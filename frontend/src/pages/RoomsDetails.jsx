@@ -80,10 +80,10 @@ const RoomsDetails = () => {
 
   return (
     roomdata && (
-      <div className="my-30 w-5/6 mx-auto flex flex-col gap-7">
+      <div className="mt-30 w-full md:w-5/6 md:mx-auto md:px-0 px-7 flex flex-col gap-7">
         <div className="flex flex-col gap-2">
           {/* Hotel name */}
-          <div className="flex gap-2 items-center">
+          <div className="flex gap-2 flex-wrap items-center">
             <h1 className="text-3xl text-gray-800 font-playfair">
               {roomdata.hotel.name}{" "}
               <span className="text-xs text-gray-900">
@@ -107,9 +107,9 @@ const RoomsDetails = () => {
         </div>
 
         {/* images */}
-        <div className="flex gap-4">
-          <img className="w-2/4 rounded-xl" src={mainimage} alt="image" />
-          <div className="grid grid-cols-2 gap-3 ">
+        <div className="flex flex-col md:flex-row gap-4">
+          <img className="w-full md:w-2/4 rounded-xl" src={mainimage} alt="image" />
+          <div className="grid grid-cols-4 md:grid-cols-2 gap-3 ">
             {roomdata.image.map((img, index) => {
               return (
                 <img
@@ -127,12 +127,14 @@ const RoomsDetails = () => {
         </div>
 
         {/* Other information */}
-        <div className="flex justify-between ">
-          <div className="flex flex-col gap-4">
-            <p className="text-gray-800 text-3xl font-playfair">
+        <div className="flex flex-col gap-6">
+          <div className="flex justify-between">
+            <p className="text-gray-800 text-2xl md:text-3xl font-playfair">
               Experience Luxury Like Never Before
             </p>
-            <div className="flex gap-4">
+            <p className="text-md md:text-xl">${roomdata.pricePerNight}/night</p>
+          </div>
+            <div className="flex gap-4 flex-wrap">
               {roomdata.amenities.map((aminity, index) => {
                 return (
                   <div
@@ -145,16 +147,14 @@ const RoomsDetails = () => {
                 );
               })}
             </div>
-          </div>
-          <p className="text-xl">${roomdata.pricePerNight}/night</p>
         </div>
 
         {/* form date */}
         <form
           onSubmit={submithandler}
-          className="flex gap-4 text-gray-700  px-5 py-4  shadow shadow-gray-400 justify-between my-5"
+          className="flex lg:flex-row flex-col gap-4 text-gray-700  px-5 py-4  shadow shadow-gray-400 justify-between my-5 "
         >
-          <div className="flex gap-3 ">
+          <div className="flex md:flex-row  flex-col gap-3 ">
             <div className="flex flex-col items-start">
               <p className="px-4 text-gray-800"> Check-in</p>
               <input
@@ -166,7 +166,7 @@ const RoomsDetails = () => {
                 placeholder="Add date"
               />
             </div>
-            <hr className="w-[0.4px] h-14 bg-gray-300" />
+            <hr className="w-[0.4px] h-14 md:block hidden  bg-gray-300" />
             <div className="flex flex-col items-start">
               <p className="px-4 text-gray-800">Check-out</p>
               <input
@@ -179,7 +179,7 @@ const RoomsDetails = () => {
                 placeholder="Add date"
               />
             </div>
-            <hr className="w-[0.4px] h-14 bg-gray-300" />
+            <hr className="w-[0.4px] h-14 md:block hidden bg-gray-300" />
             <div className="flex flex-col items-start">
               <p className="px-4 text-gray-800">Guests</p>
               <input
@@ -191,11 +191,10 @@ const RoomsDetails = () => {
                 placeholder="2 guests"
               />
             </div>
-            <hr className="w-[0.4px] h-14 bg-gray-300" />
           </div>
 
           <button
-            className="bg-blue-600 text-white rounded-sm px-10 "
+            className="bg-blue-600 text-white rounded-sm w-full  sm:w-1/2   lg:w-3/12 px-10 lg:py-0 py-2"
             type="submit"
             value="Check Availability"
             disabled={!checkInDate && !checkOutDate}
@@ -256,7 +255,7 @@ const RoomsDetails = () => {
         </p>
 
         {/* reviews */}
-        <div className="flex flex-col gap-5">
+        <div className="md:flex flex-col gap-5  hidden">
           <div className="flex gap-2 justify-start items-start">
             <img
               className="w-12 rounded-4xl"
@@ -268,7 +267,7 @@ const RoomsDetails = () => {
               <div>
                 <p>Hosted by {userDummyData.username}</p>
                 <div className="flex gap-8 text-sm">
-                  <div className="flex gap-4">
+                  <div className="flex gap-4 md:w-4 w-2">
                     <Rating />
                     <p>200+ reviews</p>
                   </div>

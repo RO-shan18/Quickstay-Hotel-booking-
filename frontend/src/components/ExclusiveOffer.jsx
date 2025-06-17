@@ -5,7 +5,7 @@ import { assets, exclusiveOffers } from "../assets/assets";
 const ExclusiveOffer = () => {
   return (
     <div className="flex flex-col gap-9">
-      <div className="flex w-3/4 justify-between mx-auto ">
+      <div className="grid grid-cols-[1fr] md:gap-0 gap-5 md:flex w-full xl:w-3/4 justify-between mx-auto xl:px-0 px-7">
         <Title
           title="Exclusive Offers"
           desc="Take advantage of our limited-time offers and special packages to enhance your stay and create unforgettable memories."
@@ -20,7 +20,7 @@ const ExclusiveOffer = () => {
         </button>
       </div>
 
-      <div className="flex w-3/4 mx-auto gap-6 ">
+      <div className="grid grid-cols-[1fr] md:flex justify-evenly gap-5 w-full xl:px-0 px-5  xl:w-3/4 xl:mx-auto">
         {exclusiveOffers.map((item) => {
           return (
             <div key={item._id} className="group flex flex-col gap-5 bg-cover bg-center w-full rounded-xl text-white py-2 px-4"  style={{ backgroundImage: `url(${item.image})` }}>

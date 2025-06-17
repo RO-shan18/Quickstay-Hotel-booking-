@@ -36,7 +36,7 @@ app.use("/api/hotel", hotelRouter);
 app.use("/api/rooms", roomRouter);
 app.use("/api/booking", bookingRouter);
 
-app.use("/api/stripe", express.raw({type : 'application/json'}), stripewebhook)
+app.post("/api/stripe", express.raw({type : 'application/json'}), stripewebhook)
 
 app.get("/", (req, res) => res.send("API is working"));
 

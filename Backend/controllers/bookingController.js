@@ -100,9 +100,17 @@ const createbooking = async(req, res)=>{
                     <p>If you need to make any changes, feel free to contact us.</p>`
         }
 
-        await transporter.sendMail(info)
+        try {
+          await transporter.sendMail(info);
+          console.log("✅ Email sent!");
+        } catch (error) {
+          console.error("❌ Error sending email:", error.message);
+        }
+       
 
         res.json({success:true, message:"Booking created successfully"});
+
+      
         
     }catch(error){
         res.json({success:false, message:error.message})
@@ -183,7 +191,7 @@ const addStripePayment = async(req, res)=>{
             metadata : {
                 bookingId
             }
-        })
+        })-
 
         res.json({success:true, url:session.url})
     }catch(error){

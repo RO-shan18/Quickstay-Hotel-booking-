@@ -6,13 +6,13 @@ import Rating from './Rating'
 const Guests = () => {
   return (
     <div >
-       <div className='mt-20'>
+       <div className='mt-10 md:mt-20'>
             <div className="flex flex-col items-center px-6 md:px-16 lg:px-24 bg-[#F5F7FF] pt-20 pb-30">
-            <div className="flex flex-col text-center w-3/4 mx-auto'">
+            <div className="flex flex-col text-center px-0 w-full lg:w-3/4 mx-auto'">
               <Title title="What Our Guests Say" desc="Discover why discerning travelers choose QuickStay for their luxury accommodations around the world."/>
             </div>
 
-            <div className="flex flex-wrap items-center gap-6 mt-20 mb-10">
+            <div className="flex flex-wrap justify-center md:justify-normal items-center gap-6 mt-20 mb-10">
                 {testimonials.map((testimonial) => (
                     <div key={testimonial.id} className="bg-white p-6 rounded-xl shadow max-w-xs">
                         <div className="flex items-center gap-3">

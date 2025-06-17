@@ -39,7 +39,7 @@ const Dashboard = () => {
       <Title font="Outlook" title="Dashboard" desc="Monitor your room listings, track bookings and analyze revenue—all in one place. Stay updated with real-time insights to ensure smooth operations." />
       </div>
 
-      <div className='flex gap-8'>
+      <div className='flex flex-wrap gap-8'>
         {/* Total Bookings */}
         <div className='flex gap-3 bg-blue-50 justify-start px-6 py-2'>
            <img className='w-10' src={assets.totalBookingIcon} alt="totalbookingicon" />
@@ -65,12 +65,12 @@ const Dashboard = () => {
         <p className='text-gray-700 text-xl'>Recent Bookings</p>
 
         <table className='border-2 border-gray-300 '>
-          <thead className='text-gray-800 text-bold text-xl '>
+          <thead className='text-gray-800 text-bold text-sm sm:text-md md:text-xl'>
             <tr>
-            <th className="px-6 py-3 border border-gray-300 bg-gray-100 ">User Name</th>
-            <th className="px-6 py-3 border border-gray-300 bg-gray-100">Room Name</th>
-            <th className="px-6 py-3 border border-gray-300 bg-gray-100">Total Amount</th>
-            <th className="px-6 py-3 border border-gray-300 bg-gray-100">Payment Status</th>
+            <th className="px-2 sm:px-6 py-3 border border-gray-300 bg-gray-100 ">User Name</th>
+            <th className="px-2 sm:px-6 py-3 border border-gray-300 bg-gray-100">Room Name</th>
+            <th className="px-2 sm:px-6 py-3 border border-gray-300 bg-gray-100">Total Amount</th>
+            <th className="px-2 sm:px-6 py-3 border border-gray-300 bg-gray-100">Payment Status</th>
             </tr>
           </thead>
           <tbody>
@@ -78,9 +78,9 @@ const Dashboard = () => {
               dashboarddata?.bookings?.map((data)=>{
                 return(
                     <tr key={data._id}>               
-                      <td className="px-6 py-3 border border-gray-300 text-gray-500">{data.user.username}</td> 
-                      <td className="px-6 py-3 border border-gray-300 text-gray-500">{data.room.roomType}</td> 
-                      <td className="px-6 py-3 border border-gray-300 text-gray-500">{data.totalPrice}</td> 
+                      <td className="px-2 sm:px-6 py-3 text-xs sm:text-lg border border-gray-300 text-gray-500">{data.user.username}</td> 
+                      <td className="px-2 sm:px-6 py-3 text-xs sm:text-lg border border-gray-300 text-gray-500">{data.room.roomType}</td> 
+                      <td className="px-2 sm:px-6 py-3 text-xs sm:text-lg border border-gray-300 text-gray-500">{data.totalPrice}</td> 
                       <td className={`${data.isPaid ?  " bg-green-300 text-green-700" : "bg-amber-300 text-orange-500" } px-6 py-3 border border-gray-300 `}>{data.isPaid ? "Completed" : "Pending"}</td> 
                   </tr>   
                 )

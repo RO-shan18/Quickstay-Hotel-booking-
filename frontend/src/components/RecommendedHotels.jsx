@@ -11,7 +11,7 @@ const RecommendedHotels = () => {
   const [recommended, setrecommended] = useState([]);
 
   const filterhotel = ()=>{
-     const recommendhotel = rooms.slice().filter((room)=> searchcities.includes(room.hotel.city));
+     const recommendhotel = rooms.slice().filter((room)=> searchcities.includes(room?.hotel?.city));
 
      setrecommended(recommendhotel);
   }
@@ -22,12 +22,12 @@ const RecommendedHotels = () => {
 
   return recommended.length > 0 && (
     <div>
-        <div className='my-20 text-center'>
+        <div className='my-10 md:my-20 text-center'>
        <Title  title="Recommended Hotels for You" desc="Discover our handpicked selection of exceptional properties around the world, offering unparalleled luxury and unforgettable experiences"/>
        </div>
 
 
-     <div className='flex justify-evenly gap-5 w-3/4 mx-auto'>
+     <div className='grid grid-cols-[1fr] sm:grid-cols-[1fr_1fr] md:flex justify-evenly gap-5 w-full xl:px-0 px-5  xl:w-3/4 xl:mx-auto'>
         {
             recommended.map((room, index)=>{
                 return (

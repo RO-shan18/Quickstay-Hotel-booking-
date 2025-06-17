@@ -10,12 +10,12 @@ const Featured_destinations = () => {
 
   return rooms.length > 0 && (
     <div>
-        <div className='my-20 text-center'>
+        <div className='my-10 md:mt-20 text-center'>
        <Title  title="Featured Hotels" desc="Discover our handpicked selection of exceptional properties around the world, offering unparalleled luxury and unforgettable experiences"/>
        </div>
 
 
-     <div className='flex justify-evenly gap-5 w-3/4 mx-auto'>
+     <div className='grid grid-cols-[1fr] sm:grid-cols-[1fr_1fr] md:flex justify-evenly gap-5 w-full xl:px-0 px-5  xl:w-3/4 xl:mx-auto'>
         {
             rooms.map((room, index)=>{
                 return (

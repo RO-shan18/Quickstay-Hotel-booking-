@@ -1,22 +1,21 @@
-import { request } from 'express';
 import Stripe from 'stripe';
 import bookingmodel from '../models/bookingmodel.js';
 
-const stripewebhook = async(req, res)=>{
+const stripewebhook = async(request, response)=>{
         const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
-        const signature = request.headers['stripe-signature']
+        const sig = request.headers['stripe-signature']
 
         let event;
 
         try{
             event = stripe.webhooks.constructEvent(
                 request.body,
-                signature,
+                sig,
                 process.env.STRIPE_WEBHOOKS_SECRET
             )
         }catch(error){
-        res.status(400).send(`Webhook error:${error.message}`)
+        response.status(400).send(`Webhook error:${error.message}`)
          }
 
         if(event.type === 'payment_intent.succeeded'){
@@ -35,7 +34,7 @@ const stripewebhook = async(req, res)=>{
             console.log("Unhandled event type: ", event.type)
         }
 
-        res.json({received : true});
+        response.json({received : true});
 }
 
 export default stripewebhook

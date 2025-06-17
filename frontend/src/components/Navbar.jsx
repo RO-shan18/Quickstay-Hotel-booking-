@@ -45,18 +45,14 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`fixed top-0 left-0 w-full flex items-center justify-between px-4 md:px-16 lg:px-24 xl:px-32 transition-all duration-500 z-50 ${
-        isScrolled
-          ? "bg-white/80 shadow-md text-gray-700 backdrop-blur-lg py-3 md:py-4"
-          : "py-4 md:py-6"
-      }`}
+      className={`fixed top-0 left-0 w-full flex items-center justify-between px-4 md:px-16 lg:px-24 xl:px-32 transition-all duration-500 z-50 bg-white/80 shadow-md text-gray-700 backdrop-blur-lg py-3 md:py-4 `}
     >
       {/* Logo */}
       <Link to="/" className="flex items-center gap-2">
         <img
           src={assets.logo}
           alt="logo"
-          className={`h-9 ${isScrolled && "invert opacity-80"}`}
+          className={`h-9 invert opacity-80"}`}
         />
       </Link>
 
@@ -65,23 +61,17 @@ const Navbar = () => {
         {navLinks.map((link, i) => (
           <Link to={link.path}
             key={i}
-            className={`group flex flex-col gap-0.5 ${
-              isScrolled ? "text-gray-700" : "text-white"
-            }`}
+            className={`group flex flex-col gap-0.5 text-gray-700`}
           >
             {link.name}
             <div
-              className={`${
-                isScrolled ? "bg-gray-700" : "bg-white"
-              } h-0.5 w-0 group-hover:w-full transition-all duration-300`}
+              className={`bg-white h-0.5 w-0 group-hover:w-full transition-all duration-300`}
             />
           </Link>
         ))}
         {user && (
           <button
-          className={`border px-4 py-1 text-sm font-light rounded-full cursor-pointer ${
-            isScrolled ? "text-black" : "text-white"
-          } transition-all`}  onClick={()=> isOwner ? navigate('/owner') : setshowreghotel(true)}
+          className={`border px-4 py-1 text-sm font-light rounded-full cursor-pointer text-black transition-all`}  onClick={()=> isOwner ? navigate('/owner') : setshowreghotel(true)}
         >
           {isOwner ? "Dashboard" : "List your hotel"}
         </button>
@@ -93,9 +83,7 @@ const Navbar = () => {
         <img
           src={assets.searchIcon}
           alt="search"
-          className={` ${
-            isScrolled && "invert"
-          } h-7 transition-all duration-500`}
+          className={`invert h-7 transition-all duration-500`}
         />
 
         {
@@ -132,7 +120,7 @@ const Navbar = () => {
           onClick={() => setIsMenuOpen(!isMenuOpen)}
           src={assets.menuIcon}
           alt="menuicon"
-          className={`${isScrolled && "invert"} h-7`}
+          className={`invert h-7`}
         />
       </div>
 

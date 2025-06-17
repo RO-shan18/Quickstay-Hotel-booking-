@@ -56,7 +56,7 @@ const Mybookings = () => {
     }
   }, [user]);
   return (
-    <div className="w-5/6 mx-auto my-30 flex flex-col gap-6">
+    <div className="w-full lg:px-0 px-6 lg:w-5/6 mx-auto mt-30 flex flex-col gap-6">
       <div>
         <Title
           title="My Bookings"
@@ -64,7 +64,7 @@ const Mybookings = () => {
         ></Title>
       </div>
 
-      <div className="grid grid-cols-[3fr_2fr_1fr] gap-5">
+      <div className="hidden sm:grid grid-cols-[3fr_2fr_2fr] lg:grid-cols-[3fr_2fr_1fr] gap-5">
         <div>Hotels</div>
         <div>Date & Timings</div>
         <div>Payment</div>
@@ -74,50 +74,50 @@ const Mybookings = () => {
       <div className="flex flex-col gap-5">
         {bookings.map((data) => {
           return (
-            <div className="grid grid-cols-[3fr_2fr_1fr] gap-5 " key={data._id}>
+            <div className="grid grid-cols-1 sm:grid-cols-[3fr_2fr_2fr] lg:grid-cols-[3fr_2fr_1fr] gap-5 " key={data._id}>
               {/* first column */}
-              <div className="flex gap-4">
+              <div className="flex flex-col lg:flex-row gap-4">
                 {/* image */}
-                <img className="w-2/4 rounded-lg" src={data.room.image[0]} />
+                <img className="w-full sm:w-5/6 lg:w-2/6 rounded-lg" src={data.room.image[0]} />
 
                 {/* hotel name */}
                 <div className="flex flex-col gap-3 justify-center">
                   <div className="flex text-gray-800 items-center gap-1">
-                    <h1 className="font-playfair text-3xl ">
+                    <h1 className="font-playfair text-xl sm:text-2xl xl:text-3xl ">
                       {data.hotel.name}
                     </h1>
-                    <p className="text-sm">({data.room.roomType})</p>
+                    <p className="text-xs xl:text-sm">({data.room.roomType})</p>
                   </div>
 
                   {/* location of hotel */}
-                  <div className="flex text-gray-500 gap-1 text-md">
+                  <div className="flex text-gray-500 gap-1 text-sm xl:text-md">
                     <img src={assets.locationIcon} alt="locationimage" />
-                    <p>{data.hotel.address}</p>
+                    <p >{data.hotel.address}</p>
                   </div>
 
                   {/* No. of guests */}
-                  <div className="flex text-gray-500 gap-1  text-md">
+                  <div className="flex text-gray-500 gap-1 text-sm xl:text-md">
                     <img src={assets.guestsIcon} alt="guesticon" />
                     <p>Guests: {data.guests}</p>
                   </div>
 
                   {/* Price of a room */}
-                  <p className="text-gray-800 text-xl">
+                  <p className="text-gray-800 text-lg xl:text-xl">
                     Total : ${data.room.pricePerNight}
                   </p>
                 </div>
               </div>
 
               {/* Second column */}
-              <div className="flex gap-7 items-center">
-                <div className="flex flex-col items-start">
+              <div className="flex flex-col md:flex-row  gap-7 md:justify-start  items-start md:items-center">
+                <div className="flex flex-col ">
                   <p className="text-gray-800 ">Check-In:</p>
                   <p className="text-gray-500 text-md">
                     {new Date(data.checkInDate).toLocaleDateString()}
                   </p>
                 </div>
-                <div className="flex flex-col items-start">
-                  <p className="flex flex-col items-start">Check-Out:</p>
+                <div className="flex flex-col">
+                  <p className="text-gray-800">Check-Out:</p>
                   <p className="text-gray-500 text-md">
                     {new Date(data.checkOutDate).toLocaleDateString()}
                   </p>
@@ -125,7 +125,7 @@ const Mybookings = () => {
               </div>
 
               {/* third column */}
-              <div className="flex flex-col justify-center">
+              <div className="flex flex-col sm:items-start items-center lg:justify-center justify-start">
                 <div className="flex gap-2 items-center py-2">
                   <div
                     className={`w-2 h-2 rounded-4xl ${
@@ -144,7 +144,7 @@ const Mybookings = () => {
                   onClick={()=>handlepayment(data._id)}
                   className={` ${
                     data.isPaid && "hidden"
-                  } w-3/4 py-1 rounded-2xl border border-gray-400 `}
+                  } w-3/4 py-1 rounded-2xl border border-gray-400 text-md xl:text-lg`}
                 >
                   Pay Now
                 </button>

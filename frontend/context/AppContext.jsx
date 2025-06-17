@@ -14,6 +14,7 @@ export const AppContextProvider = ({children})=>{
     const currency = import.meta.env.VITE_CURRENCY;
     const {user} = useUser();
     const {getToken} = useAuth();
+    const[showsidebar, setshowsidebar] = useState(true);
 
     const [isOwner , setisOwner] = useState(false);
     const [showreghotel, setshowreghotel] = useState(false);
@@ -74,7 +75,7 @@ export const AppContextProvider = ({children})=>{
 
 
     const value={
-        currency, user, navigate, isOwner, setisOwner, showreghotel, setshowreghotel, searchcities, setsearchcities, toast, axios, getToken, rooms, setrooms, getallrooms
+        currency, user, navigate, isOwner, setisOwner, showreghotel, setshowreghotel, searchcities, setsearchcities, toast, axios, getToken, rooms, setrooms, getallrooms, showsidebar, setshowsidebar
     }
 
 

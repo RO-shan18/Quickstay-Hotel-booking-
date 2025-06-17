@@ -97,7 +97,7 @@ const Addrooms = () => {
          {/* images */}
          <div className='flex flex-col gap-2'>
           <p className='text-xl text-gray-700'>Images</p>
-           <div className='flex gap-5'>
+           <div className='flex flex-wrap gap-5'>
             {
               Object.keys(images).map((key)=>{
                 return(
@@ -111,7 +111,7 @@ const Addrooms = () => {
             </div>
          </div>
 
-        <div className='flex gap-5'>
+        <div className='flex sm:flex-row flex-col gap-5'>
          {/* Room types */}
          <div className='flex flex-col gap-2'>
           <p className='text-xl text-gray-700'>Room Type</p>
@@ -149,7 +149,7 @@ const Addrooms = () => {
          </div>
 
          {/* button */}
-         <button className='bg-blue-500 px-5 py-2 w-1/4 text-white text-xl'>{loading ? " Adding...." : "Add room"}</button>
+         <button className='bg-blue-500 px-5 py-2 w-3/4 sm:w-2/4 md:w-1/4 text-white text-xl'>{loading ? " Adding...." : "Add room"}</button>
        </form>
     </div>
   )

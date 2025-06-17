@@ -10,7 +10,7 @@ const Sidebar = () => {
     { name:"List Room", path:"/owner/list-rooms", icon: assets.listIcon},
   ]
   return (
-    <div className='w-fit h-full '>
+    <div className='w-fit h-full absolute md:static bg-white'>
         <div className=' h-screen flex flex-col  border-r border-gray-200 pt-2'>
           {
             navlinks.map((link, index)=>{
